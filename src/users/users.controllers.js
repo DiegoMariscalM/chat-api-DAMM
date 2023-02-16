@@ -1,5 +1,6 @@
 const Users = require("../models/users.models");
 const uuid = require("uuid").v4;
+const { hashpassword } = require('../utils/cypto')
 
 
 const getAllUsers = async () => {
@@ -22,6 +23,7 @@ const createUser = async (userObj) => {
         firstName: userObj.firstName,
         lastName: userObj.lastName,
         email: userObj.email,
+        password: hashpassword(userObj.password),
         profileImage: userObj.profileImage,
         phone: userObj.phone,
     };

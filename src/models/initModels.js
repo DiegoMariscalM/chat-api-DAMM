@@ -1,5 +1,4 @@
-//? This code is used to initialize the models
-//? and establish the relationships between them.
+
 
 const Conversations = require("./conversations.models");
 const Messages = require("./messages.models");
