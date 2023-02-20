@@ -3,6 +3,7 @@ const app = express();
 const db = require("./utils/database");
 const usersRouter = require("./users/users.router");
 const authRouter = require('./auth/auth.router')
+const passportJwt = require('./middlewares/auth.middleware')
 
 const responseHandlers = require("./utils/handleResponses");
 
@@ -45,6 +46,13 @@ app.get("/", (req, res) => {
         },
     });
 });
+
+app.get('/protected', passportJwt.authenticate('jwt', { session: false }),
+    (req, res) => {
+        res.status(200).json({
+            message: 'HEllO user:D'
+        })
+    })
 
 app.use("*", (req, res) => {
     responseHandlers.error({

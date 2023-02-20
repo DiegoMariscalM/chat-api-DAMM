@@ -123,10 +123,54 @@ const deleteUser = async (req, res) => {
         });
 };
 
+const getMyUser = (req, res) => {
+
+    const id = req.user.id
+
+    usersControllers.getUserById(id)
+        .then(data => {
+            responses.success({
+                res,
+                status: 200,
+                message: 'This is youre current user',
+                data
+            })
+        })
+        .catch(err => {
+            responses.error({
+                res,
+                status: 400,
+                message: 'Something bad getting the current user',
+                data: err
+            })
+        })
+}
+
+const delteMyUser = (req, res) => {
+    const id = req.user.id
+    usersControllers.deleteUser(id)
+        .then(data => {
+            responses.success({
+                res,
+                status: 200,
+                message: `User with id ${id} has been deleted`,
+            })
+        })
+        .catch(err => {
+            responses.error({
+                res,
+                status: 400,
+                message: 'Something went wrong',
+            })
+        })
+}
+
 module.exports = {
     getAllUsers,
     getUserById,
     createUser,
     updateUser,
     deleteUser,
+    getMyUser,
+    delteMyUser
 };
