@@ -65,3 +65,8 @@ const postNewConversation = (req, res) => {
         })
 
 }
+
+module.exports = {
+    getAllConversationsByUser,
+    postNewConversation
+}
