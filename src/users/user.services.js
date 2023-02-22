@@ -1,4 +1,5 @@
 
+const { hashpassword } = require("../utils/cypto");
 const responses = require("../utils/handleResponses");
 const usersControllers = require("./users.controllers");
 
@@ -165,6 +166,42 @@ const delteMyUser = (req, res) => {
         })
 }
 
+
+const patchMyUser = (req, res) => {
+
+    const id = req.user.id //? this is used to know is the user
+
+    const { firstName, lastName, email, password, profileImage, phone } = req.body
+
+    const userObj = {
+        firstName,
+        lastName,
+        email,
+        password: hashpassword(password),
+        profileImage,
+        phone
+    }
+
+    usersControllers.updateUser(id, userObj)
+        .then(data => {
+            responses.success({
+                res,
+                status: 200,
+                message: 'youre user has benn updated'
+            })
+        })
+        .catch(err => {
+            responses.error({
+                res,
+                status: 400,
+                message: 'Something went wrong',
+                data: err
+            })
+        })
+}
+
+
+
 module.exports = {
     getAllUsers,
     getUserById,
@@ -172,5 +209,6 @@ module.exports = {
     updateUser,
     deleteUser,
     getMyUser,
-    delteMyUser
+    delteMyUser,
+    patchMyUser
 };

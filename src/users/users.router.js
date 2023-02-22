@@ -7,8 +7,8 @@ router.get("/", usersServices.getAllUsers);
 router.get("/:id", usersServices.getUserById);
 
 router.get('/me', passportJwt.authenticate('jwt', { session: false }), usersServices.getMyUser)
-//router.patch('/')
-router.delete('/me', usersServices.delteMyUser)
+router.patch('/me', passportJwt.authenticate('jwt', { session: false }), usersServices.patchMyUser)
+router.delete('/me', passportJwt.authenticate('jwt', { session: false }), usersServices.delteMyUser)
 
 router.post("/", usersServices.createUser);
 router.patch("/:id", usersServices.updateUser);
